@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Category Path:</strong>
+  <%= @admin_path.name %>
+</p>
+<p>
+  <strong>Id:</strong>
+  <%= @admin_path.id %>
+</p>
+
+<p>
+  <strong>Shop:</strong>
+  <%= @admin_path.shop.name %> 
+  <strong>Id:</strong>
+  <%= @admin_path.shop.id %> 
+</p>
+
+<%= link_to 'Edit', edit_admin_path_path(@admin_path) %> |
+<%= link_to 'Back', admin_paths_path %>
+<hr></hr>
+
+<table>
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th>Path</th>
+      <th>Terminator</th>
+      <th>Id ref</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @admin_path.sub_paths.each do |sub_path| %>
+
+      <tr>
+        <td><%= sub_path.part %></td>
+        <td><%= sub_path.path_id %></td>
+        <td><%= sub_path.terminator %></td>
+        <% if sub_path.id_ref %>
+          <td><%= sub_path.id_ref %></td>
+        <% else %>
+          <td>None</td>
+        <% end %>
+        <td><%= link_to 'Show', sub_path %></td>
+        <td><%= link_to 'Edit', edit_admin_sub_path_path(sub_path) %></td>
+        <td><%= link_to 'Destroy', sub_path, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+
+  </tbody>
+</table>
+<br>
+<strong>Resulting url: </strong>
+<% url = @admin_path.shop.url %>
+<% @admin_path.sub_paths.each do |sub_path| %>
+  <% url += sub_path.part %>
+<% end %>
+<%= url %>
+

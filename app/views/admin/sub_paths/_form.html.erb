@@ -1,0 +1,33 @@
+<%= form_for(@admin_sub_path) do |f| %>
+  <% if @admin_sub_path.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@admin_sub_path.errors.count, "error") %> prohibited this admin_sub_path from being saved:</h2>
+
+      <ul>
+      <% @admin_sub_path.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :part %><br>
+    <%= f.text_field :part %>
+  </div>
+  <div class="field">
+    <%= f.label :path_id %><br>
+    <%= f.number_field :path_id %>
+  </div>
+  <div class="field">
+    <%= f.label :terminator %><br>
+    <%= f.check_box :terminator %>
+  </div>
+  <div class="field">
+    <%= f.label :id_ref %><br>
+    <%= f.number_field :id_ref %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

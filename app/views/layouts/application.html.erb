@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% content_for :title do %>
+      Plants
+    <% end %>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
+
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <!--<link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css"> -->
+  </head>
+
+  <body>
+
+    <div class="fixed">
+      <%= render 'layouts/nav_bar' %>
+    </div>
+    <%= render 'layouts/alerts' %>
+
+    <div class="row">
+      <div class="large-2 columns">
+        <%= render 'layouts/sidebar' %>
+      </div>
+      <div class="large-10 columns">
+        <%= yield %>
+      </div>
+    </div> 
+       
+  </body>
+</html>

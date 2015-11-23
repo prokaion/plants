@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Part:</strong>
+  <%= @admin_sub_path.part %>
+</p>
+
+<p>
+  <strong>Path:</strong>
+  <%= @admin_sub_path.path_id %>
+</p>
+
+<p>
+  <strong>Terminator:</strong>
+  <%= @admin_sub_path.terminator %>
+</p>
+
+<p>
+  <strong>Id ref:</strong>
+  <% if @admin_sub_path.id_ref? %>
+    <%= @admin_sub_path.id_ref %>
+  <% else %>
+    None
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_admin_sub_path_path(@admin_sub_path) %> |
+<%= link_to 'Back', admin_sub_paths_path %>

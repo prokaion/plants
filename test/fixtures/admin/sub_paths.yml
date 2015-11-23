@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  part: MyString
+  path_id: 1
+  terminator: false
+  id_ref: 1
+
+two:
+  part: MyString
+  path_id: 1
+  terminator: false
+  id_ref: 1
