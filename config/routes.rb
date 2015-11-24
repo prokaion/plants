@@ -3,16 +3,11 @@ Rails.application.routes.draw do
 
   resources :offers
   resources :products
-  namespace :admin do
-    resources :paths
-  end
-  namespace :admin do
-    resources :sub_paths
-  end
+  
   root 'plants#index'
 
   scope '/admin' do
-    resources :shops
+    resources :shops, :paths, :sub_paths
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

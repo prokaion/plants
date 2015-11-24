@@ -1,10 +1,10 @@
-<%= form_for(@admin_path) do |f| %>
-  <% if @admin_path.errors.any? %>
+<%= form_for(@path) do |f| %>
+  <% if @path.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@admin_path.errors.count, "error") %> prohibited this admin_path from being saved:</h2>
+      <h2><%= pluralize(@path.errors.count, "error") %> prohibited this path from being saved:</h2>
 
       <ul>
-      <% @admin_path.errors.full_messages.each do |message| %>
+      <% @path.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>

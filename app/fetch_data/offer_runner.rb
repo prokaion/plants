@@ -2,14 +2,14 @@ class OfferRunner
   require 'open-uri'
 
   def runner
-    pathes = Admin::Path.all
+    pathes = Path.all
     url = ""
 
     pathes.each do |path|
       # get url from shop
       url = path.shop.url      
       # get all subPathes from path
-      sub_paths = Admin::SubPath.where("path_id = ?", path.id)
+      sub_paths = SubPath.where("path_id = ?", path.id)
 
       sub_paths.each do |sub_path|
         url += sub_path.part

@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Part:</strong>
+  <%= @sub_path.part %>
+</p>
+
+<p>
+  <strong>Path:</strong>
+  <%= @sub_path.path_id %>
+</p>
+
+<p>
+  <strong>Terminator:</strong>
+  <%= @sub_path.terminator %>
+</p>
+
+<p>
+  <strong>Id ref:</strong>
+  <% if @sub_path.id_ref? %>
+    <%= @sub_path.id_ref %>
+  <% else %>
+    None
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_sub_path_path(@sub_path) %> |
+<%= link_to 'Back', sub_paths_path %>

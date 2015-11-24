@@ -13,16 +13,16 @@
 
 ActiveRecord::Schema.define(version: 20151122191933) do
 
-  create_table "admin_paths", force: :cascade do |t|
+  create_table "paths", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.integer  "shop_id",    limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
-  add_index "admin_paths", ["shop_id"], name: "index_admin_paths_on_shop_id", using: :btree
+  add_index "paths", ["shop_id"], name: "index_paths_on_shop_id", using: :btree
 
-  create_table "admin_sub_paths", force: :cascade do |t|
+  create_table "sub_paths", force: :cascade do |t|
     t.string   "part",       limit: 255
     t.integer  "path_id",    limit: 4
     t.boolean  "terminator"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20151122191933) do
     t.datetime "updated_at",             null: false
   end
 
-  add_index "admin_sub_paths", ["path_id", "id_ref", "terminator"], name: "index_admin_sub_paths_on_path_id_and_id_ref_and_terminator", using: :btree
+  add_index "sub_paths", ["path_id", "id_ref", "terminator"], name: "index_sub_paths_on_path_id_and_id_ref_and_terminator", using: :btree
 
   create_table "offers", force: :cascade do |t|
     t.integer  "price_cent", limit: 4
@@ -57,5 +57,5 @@ ActiveRecord::Schema.define(version: 20151122191933) do
     t.datetime "updated_at",             null: false
   end
 
-  add_foreign_key "admin_paths", "shops"
+  add_foreign_key "paths", "shops"
 end
