@@ -8,6 +8,7 @@
       <th>Name</th>
       <th>Price cent</th>
       <th>Desc</th>
+      <th>path_id</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= offer.name %></td>
         <td><%= offer.price_cent %></td>
         <td><%= offer.desc %></td>
+        <td><%= offer.path.id %></td>
         <td><%= link_to 'Show', offer %></td>
         <td><%= link_to 'Edit', edit_offer_path(offer) %></td>
         <td><%= link_to 'Destroy', offer, method: :delete, data: { confirm: 'Are you sure?' } %></td>

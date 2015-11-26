@@ -10,7 +10,7 @@ class PathsController < ApplicationController
   # GET /admin/paths/1
   # GET /admin/paths/1.json
   def show
-    puts "here!!!!!!!!!"+ @path.to_s
+    @sub_paths = @path.sub_paths
   end
 
   # GET /admin/paths/new

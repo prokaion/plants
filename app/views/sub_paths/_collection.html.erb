@@ -1,0 +1,34 @@
+
+<table>
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th>Path</th>
+      <th>Terminator</th>
+      <th>Id ref</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sub_paths.each do |sub_path| %>
+      <tr>
+        <td><%= sub_path.part %></td>
+        <td><%= sub_path.path_id %></td>
+        <td><%= sub_path.terminator %></td>
+        <% if sub_path.id_ref %>
+          <td><%= sub_path.id_ref %></td>
+        <% else %>
+          <td>None</td>
+        <% end %>
+        <td><%= link_to 'Show', sub_path %></td>
+        <td><%= link_to 'Edit', edit_sub_path_path(sub_path) %></td>
+        <td><%= link_to 'Destroy', sub_path, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sub path', new_sub_path_path %>

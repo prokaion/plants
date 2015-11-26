@@ -1,74 +1,64 @@
 class OfferRunner
-  require 'open-uri'
 
-  def runner
-    pathes = Path.all
-    url = ""
+  # shop parameter is optional. if none (nil) is given all shops will be handled.
+  def runner(shop_id = nil)
 
-    pathes.each do |path|
-      # get url from shop
-      url = path.shop.url      
-      # get all subPathes from path
-      sub_paths = SubPath.where("path_id = ?", path.id)
+    if( shop_id.nil? )
+      Shop.all.each do |shop|
+        next if shop.paths.nil?
+        
+        # get right parser for shop (fetcher) 
+        @fetcher = ShopParser::DataFetcher.new(shop.name.downcase)
 
-      sub_paths.each do |sub_path|
-        url += sub_path.part
+        get_and_persist_offers(shop.paths)
+      end      
+    else
+      shop = Shop.find(shop_id)
+      get_and_persist_offers(shop.paths)
+    end
+  end
+
+  private
+    def get_and_persist_offers(pathes)
+
+      pathes.each do |path|
+
+        url = create_main_offer_url(path)      
+
+        # gather urls for each offer
+        offer_urls = @fetcher.get_offer_urls(path.shop.url, url) 
+
+        offers_we_have = Offer.where(path_id: path.id).select("name").to_a
+        puts offers_we_have.first
+
+        builder = OfferBuilder.new
+        # fetch offer from each offer_url
+        offer_urls.each do |url|
+          offer_map = @fetcher.fetch_data( path.shop.url + url)
+          offer = builder.build(offer_map, path.id)
+
+          offer.save
+          # remove the offer from offers_we_have
+          offers_we_have.delete_if { |offer_we_have| offer_we_have.name == offer.name }
+        end
+        # set all offers active = 0 which are still in offers_we_have
+        offers_we_have.each do |offer|
+          offer = Offer.find_by(offer.name)
+          offer.update(active: false)
+        end     
       end
-      Rails.logger.info url
-
-      # gather urls and fetch data
-      offer_urls = get_offer_urls(path.shop.url, url) 
-
-      builder = OfferBuilder.new
-      offer_urls.each do |url|
-        offer_map = fetch_data( path.shop.url + url)
-        offer = builder.build(offer_map)
-
-        offer.save
-      end     
     end
 
-  end
+    def create_main_offer_url(path)
+              # get url from shop
+        url = path.shop.url      
+        # get all subPathes from path
+        sub_paths = SubPath.where("path_id = ?", path.id)
 
-  def get_offer_urls(domain, url)
-    urls = []
-
-    begin
-      doc = Nokogiri::HTML(open(url))
-
-      pagination = doc.xpath('//ul[@class="pagination"]').first
-
-      next_link = pagination.search('//a[@class="next"]').first
-
-      doc.xpath('//div[@class="tsr-product cc"]').each do |div_offer| 
-        urls.push(div_offer.search('a').first['href'])
-      end
-      
-      # create link for next page
-      if (next_link.nil? == false)
-        url = domain + next_link['href']        
-      end
-
-    end until next_link.nil?
-
-    return urls
-  end
-
-  def fetch_data(url)
-    doc = Nokogiri::HTML(open(url))
-
-    offer_map = { :offer_name => doc.xpath('//li[@class="last"]').text }
-    description =  doc.xpath('//div[@class="txt clearfix"]/p').first.text
-    offer_map[:desc] = description
-
-    doc.xpath('//p[@class="price"]').each do |p|
-
-      if( p.search('span').empty? == false)        
-        offer_map[:price] = p.search('span').first.text
-      end
-      #byebug      
+        sub_paths.each do |sub_path|
+          url += sub_path.part
+        end
+        Rails.logger.info url
+        return url
     end
-
-    return offer_map
-  end
 end

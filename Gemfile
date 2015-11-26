@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'foundation-rails'
 gem 'nokogiri', '~> 1.6', '>= 1.6.7.rc3'
+gem 'lograge'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 # Use mysql as the database for Active Record

@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151122191933) do
+ActiveRecord::Schema.define(version: 20151125151938) do
+
+  create_table "offers", force: :cascade do |t|
+    t.integer  "price_cent", limit: 4
+    t.text     "desc",       limit: 65535
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "name",       limit: 255
+    t.boolean  "active",                   default: false
+    t.integer  "path_id",    limit: 4
+  end
+
+  add_index "offers", ["active"], name: "index_offers_on_active", using: :btree
+  add_index "offers", ["name"], name: "index_offers_on_name", unique: true, using: :btree
+  add_index "offers", ["path_id"], name: "index_offers_on_path_id", using: :btree
 
   create_table "paths", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -20,28 +34,7 @@ ActiveRecord::Schema.define(version: 20151122191933) do
     t.datetime "updated_at",             null: false
   end
 
-  add_index "paths", ["shop_id"], name: "index_paths_on_shop_id", using: :btree
-
-  create_table "sub_paths", force: :cascade do |t|
-    t.string   "part",       limit: 255
-    t.integer  "path_id",    limit: 4
-    t.boolean  "terminator"
-    t.integer  "id_ref",     limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "sub_paths", ["path_id", "id_ref", "terminator"], name: "index_sub_paths_on_path_id_and_id_ref_and_terminator", using: :btree
-
-  create_table "offers", force: :cascade do |t|
-    t.integer  "price_cent", limit: 4
-    t.text     "desc",       limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.string   "name",       limit: 255
-  end
-
-  add_index "offers", ["name"], name: "index_offers_on_name", unique: true, using: :btree
+  add_index "paths", ["shop_id"], name: "index_admin_paths_on_shop_id", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.string   "name",         limit: 255
@@ -57,5 +50,17 @@ ActiveRecord::Schema.define(version: 20151122191933) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "sub_paths", force: :cascade do |t|
+    t.string   "part",       limit: 255
+    t.integer  "path_id",    limit: 4
+    t.boolean  "terminator"
+    t.integer  "id_ref",     limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "sub_paths", ["path_id", "id_ref", "terminator"], name: "index_admin_sub_paths_on_path_id_and_id_ref_and_terminator", using: :btree
+
+  add_foreign_key "offers", "paths"
   add_foreign_key "paths", "shops"
 end

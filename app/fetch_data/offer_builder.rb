@@ -1,18 +1,21 @@
 class OfferBuilder
 
-  def build(offer_map)
+  def build(offer_map, path_id)
     offer = Offer.find_by(name: offer_map[:offer_name])
     if offer.nil?
       offer = Offer.new
       offer.name = offer_map[:offer_name]
     end 
 
+    offer.path_id = path_id
     offer.desc = offer_map[:desc]
     priceString = offer_map[:price]
     price = convert_price(priceString)
 
     offer.price_cent = price 
-    puts offer.price_cent  
+    puts offer.price_cent
+    # set offer active
+    offer.active = true 
     return offer 
   end
 
