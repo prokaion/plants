@@ -1,12 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Shops</h1>
+<h3>Listing Shops</h3>
 
 <table>
   <thead>
     <tr>
       <th>Name</th>
       <th>Url</th>
+      <th>Pathes of Shop</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
       <tr>
         <td><%= shop.name %></td>
         <td><%= shop.url %></td>
+        <td><%= link_to 'Pathes', controller: 'shop_paths', action: 'index', shop_id: shop.id %></td>
         <td><%= link_to 'Show', shop %></td>
         <td><%= link_to 'Edit', edit_shop_path(shop) %></td>
         <td><%= link_to 'Destroy', shop, method: :delete, data: { confirm: 'Are you sure?' } %></td>

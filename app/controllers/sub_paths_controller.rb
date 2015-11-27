@@ -13,8 +13,12 @@ class SubPathsController < ApplicationController
   end
 
   # GET /admin/sub_paths/new
+  # generate many sub_pathes at once
   def new
-    @sub_path = SubPath.new
+    @sub_pathes = []
+    5.times do
+      @sub_pathes << SubPath.new
+    end
   end
 
   # GET /admin/sub_paths/1/edit
@@ -24,6 +28,35 @@ class SubPathsController < ApplicationController
   # POST /admin/sub_paths
   # POST /admin/sub_paths.json
   def create
+    #objects = []
+    # persist and set ref_ids
+    last_path_object = nil
+    params["sub_path_params"].each do |sub_path|
+
+      if( (sub_path["part"].nil? || sub_path["part"] == "")   && (sub_path["path_id"].nil? || sub_path["path_id"] == "") )
+        next
+      end
+
+      current_path = SubPath.create(sub_path_params(sub_path))
+      if(current_path.valid?) # save was successful
+        # set id_ref if not the first path_
+        current_path.update(id_ref: last_path_object.id) unless last_path_object.nil?
+        last_path_object = current_path
+      else
+        render :new
+      end
+      
+    end
+
+    # set terninate of lastPath_object to true and update
+    if( last_path_object.update(terminator: true) )
+
+      redirect_to Path.find(params[:sub_path_params].first[:path_id])
+    else
+      render :new
+    end
+
+=begin    
     @sub_path = SubPath.new(sub_path_params)
 
     respond_to do |format|
@@ -35,6 +68,7 @@ class SubPathsController < ApplicationController
         format.json { render json: @sub_path.errors, status: :unprocessable_entity }
       end
     end
+=end    
   end
 
   # PATCH/PUT /admin/sub_paths/1
@@ -68,7 +102,8 @@ class SubPathsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def sub_path_params
-      params.require(:sub_path).permit(:part, :path_id, :terminator, :id_ref)
+    def sub_path_params(my_params)
+      my_params.permit(:part, :path_id, :terminator)
+      #params.require(:sub_path).permit(:part, :path_id, :terminator, :id_ref)
     end
 end

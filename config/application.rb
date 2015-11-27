@@ -8,10 +8,10 @@ Bundler.require(*Rails.groups)
 
 module Plants
   class Application < Rails::Application
-    config.autoload_paths += %W(#{config.root}/fetch_data
+    config.autoload_paths += %W(#{config.root}/fetch_data                                
     )
     config.web_console.whitelisted_ips = '192.168.0.0/16'
-    
+=begin    
     unless Rails.env.test?
       log_level = String(ENV['LOG_LEVEL'] || "info").upcase
       config.logger = Logger.new(STDOUT)
@@ -19,6 +19,7 @@ module Plants
       config.log_level = log_level
       config.lograge.enabled = true # see lograge section below...
     end
+=end    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

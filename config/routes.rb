@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'welcome/index'
+  get '/admin/shop_paths', to: 'shop_paths#index'
 
   resources :offers
   resources :products
