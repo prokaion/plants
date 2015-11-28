@@ -1,5 +1,6 @@
 # kind of a Factory
 class ShopParser::DataFetcher
+  require 'open-uri'
 
   def self.new(typeName)
     if(typeName == 'dehner')

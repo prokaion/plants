@@ -14,8 +14,16 @@ class OfferRunner
       end      
     else
       shop = Shop.find(shop_id)
+      # get right parser for shop (fetcher) 
+      @fetcher = ShopParser::DataFetcher.new(shop.name.downcase)
       get_and_persist_offers(shop.paths)
     end
+  end
+
+  # for convenience
+  def get_offers_by_path(path)
+    array = [path]
+    get_and_persist_offers(array)
   end
 
   private
@@ -34,7 +42,7 @@ class OfferRunner
         builder = OfferBuilder.new
         # fetch offer from each offer_url
         offer_urls.each do |url|
-          offer_map = @fetcher.fetch_data( path.shop.url + url)
+          offer_map = @fetcher.fetch_data( url )
           offer = builder.build(offer_map, path.id)
 
           offer.save

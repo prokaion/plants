@@ -1,5 +1,4 @@
 class ShopParser::DataFetcherDehner < ShopParser::DataFetcher
-  require 'open-uri'
 
   def get_offer_urls(domain, url)
     urls = []
@@ -12,7 +11,7 @@ class ShopParser::DataFetcherDehner < ShopParser::DataFetcher
       next_link = pagination.search('//a[@class="next"]').first
 
       doc.xpath('//div[@class="tsr-product cc"]').each do |div_offer| 
-        urls.push(div_offer.search('a').first['href'])
+        urls.push(domain + div_offer.search('a').first['href'])
       end
       
       # create link for next page
