@@ -57,6 +57,7 @@ class ShopParser::FetcherHollaender < ShopParser::DataFetcher
     return offer_map
   end
 
+
   def testParseFileWithRegex(filename)
     file = File.open(filename, :encoding => 'iso-8859-1')
     string = file.read

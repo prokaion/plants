@@ -1,3 +1,4 @@
+# for shop dehner
 class ShopParser::DataFetcherDehner < ShopParser::DataFetcher
 
   def get_offer_urls(domain, url)

@@ -5,6 +5,7 @@ begin
 rescue => exception
   Rails.logger.info exception
 end
+
 =end
 
 fetcher = ShopParser::DataFetcher.new("holländer")

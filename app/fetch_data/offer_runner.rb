@@ -20,7 +20,7 @@ class OfferRunner
     end
   end
 
-  # for convenience
+  # for convenience TODO
   def get_offers_by_path(path)
     array = [path]
     get_and_persist_offers(array)

@@ -1,4 +1,4 @@
-# kind of a Factory
+# kind of a Factory base class for parsers
 class ShopParser::DataFetcher
   require 'open-uri'
 

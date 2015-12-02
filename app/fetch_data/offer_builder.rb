@@ -1,3 +1,4 @@
+# build offers
 class OfferBuilder
 
   def build(offer_map, path_id)
