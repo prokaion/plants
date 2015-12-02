@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 
 <p>
   <strong>Category Path:</strong>
@@ -23,6 +22,8 @@
 <strong>Subpathes:</strong>
 
 <%= render '/sub_paths/collection' %>
+<%= link_to 'New Sub Pathes', controller: 'sub_paths', action: 'new', path_id: @path.id %> | 
+<%= link_to 'Update Sub Pathes', controller: 'sub_paths', action: 'edit_multiple', path_id: @path.id %>
 <br></br>
 
 <strong>Resulting url: </strong>

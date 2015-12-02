@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'welcome/index'
   get '/admin/shop_paths', to: 'shop_paths#index'
+  get '/admin/edit_sub_pathes', to: 'sub_paths#edit_multiple'
+  post 'admin/edit_sub_pathes', to: 'sub_paths#update_multiple'
 
   resources :offers
   resources :products

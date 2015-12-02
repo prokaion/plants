@@ -15,6 +15,7 @@ class SubPathsController < ApplicationController
   # GET /admin/sub_paths/new
   # generate many sub_pathes at once
   def new
+    @path = Path.find(params[:path_id]) unless params[:path_id].nil?
     @sub_pathes = []
     5.times do
       @sub_pathes << SubPath.new
@@ -25,10 +26,15 @@ class SubPathsController < ApplicationController
   def edit
   end
 
+  # needs a path_id param!
+  def edit_multiple
+    @path = Path.find(params[:path_id])
+    @sub_pathes = SubPath.where(path_id: params[:path_id]).to_a
+  end
+
   # POST /admin/sub_paths
   # POST /admin/sub_paths.json
   def create
-    #objects = []
     # persist and set ref_ids
     last_path_object = nil
     params["sub_path_params"].each do |sub_path|
@@ -38,22 +44,24 @@ class SubPathsController < ApplicationController
       end
 
       current_path = SubPath.create(sub_path_params(sub_path))
+
       if(current_path.valid?) # save was successful
         # set id_ref if not the first path_
         current_path.update(id_ref: last_path_object.id) unless last_path_object.nil?
         last_path_object = current_path
       else
-        render :new
+        render :new 
       end
       
     end
 
     # set terninate of lastPath_object to true and update
-    if( last_path_object.update(terminator: true) )
-
-      redirect_to Path.find(params[:sub_path_params].first[:path_id])
+    if( !last_path_object.nil? && last_path_object.update(terminator: true) )
+      path = Path.find(params[:sub_path_params].first[:path_id])
+      puts path.name
+      redirect_to path, notice: 'Sub pathes were successfully created.'
     else
-      render :new
+      render :new 
     end
 
 =begin    
@@ -69,6 +77,21 @@ class SubPathsController < ApplicationController
       end
     end
 =end    
+  end
+
+  # beware! it is possible to change the path id for members of this sub_pathes!
+  def update_multiple
+    params[:sub_path_params].each_key { |id| 
+      sub_path = SubPath.find(id)
+      puts params[:sub_path_params][id]
+      if( !SubPath.update(id, sub_path_params(params[:sub_path_params][id])) )
+        #render 'edit_multiple'
+      end
+      @path = Path.find(sub_path.path_id)
+    }
+
+    redirect_to @path, notice: 'Sub pathes were successfully updated.' unless @path.nil?
+
   end
 
   # PATCH/PUT /admin/sub_paths/1

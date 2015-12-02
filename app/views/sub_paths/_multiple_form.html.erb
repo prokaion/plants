@@ -1,7 +1,13 @@
 
 <div class="row">
   <div class="large-10 large-offset-2 columns">
-    <%= form_tag( controller: "sub_paths", action: "create" ) do %>
+
+    <% if( !@path.nil? ) %>
+      <%= render '/paths/single_path' %>
+      <hr></hr>
+    <% end %>
+
+    <%= form_tag( controller: "sub_paths", action: yield(:action) ) do %>
       <% @sub_pathes.each do |sub_path| %>
         <%= fields_for 'sub_path_params[]', sub_path do |p| %>
           <div class="row">
@@ -9,7 +15,7 @@
               <%= p.label :part %><br>
               <%= p.text_field :part%>            
             </div>
-            <div class="large-2 columns">
+            <div class="large-2 columns end">
               <%= p.label :path_id %><br>
               <%= p.number_field :path_id %>
             </div>
@@ -18,8 +24,9 @@
         <% end %>
       <% end %>
 
-      <%= submit_tag %>
+      <%= submit_tag yield(:title) %>
 
     <% end %>
+    
   </div>
 </div>

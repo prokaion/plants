@@ -8,9 +8,8 @@ end
 =end
 
 fetcher = ShopParser::DataFetcher.new("holländer")
-puts fetcher
 
-offers_we_have = Offer.where(path_id: 1).select("name")
-byebug
-puts "offers? " + offers_we_have.first.name
-puts "end....."
+fetcher.fetch_data("http://www.pflanzencenter-berlin.de//zimmerpflanzen/bueropflanzen/areca-palme-1.php")
+#fetcher.testParseFileWithRegex("holl1.html")
+
+puts "end!"

@@ -25,9 +25,11 @@ class ShopParser::DataFetcherDehner < ShopParser::DataFetcher
   end
 
   def fetch_data(url)
+    offer_map = super(url)
+
     doc = Nokogiri::HTML(open(url))
 
-    offer_map = { :offer_name => doc.xpath('//li[@class="last"]').text }
+    offer_map[:offer_name] = doc.xpath('//li[@class="last"]').text
     description =  doc.xpath('//div[@class="txt clearfix"]/p').first.text
     offer_map[:desc] = description
 

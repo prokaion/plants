@@ -15,4 +15,8 @@ class ShopParser::DataFetcher
 
     return object
   end
+
+  def fetch_data(url)
+    offer_map = {:url => url}
+  end
 end
