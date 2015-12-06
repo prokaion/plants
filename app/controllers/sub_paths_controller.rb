@@ -62,21 +62,7 @@ class SubPathsController < ApplicationController
       redirect_to path, notice: 'Sub pathes were successfully created.'
     else
       render :new 
-    end
-
-=begin    
-    @sub_path = SubPath.new(sub_path_params)
-
-    respond_to do |format|
-      if @sub_path.save
-        format.html { redirect_to @sub_path, notice: 'Sub path was successfully created.' }
-        format.json { render :show, status: :created, location: @sub_path }
-      else
-        format.html { render :new }
-        format.json { render json: @sub_path.errors, status: :unprocessable_entity }
-      end
-    end
-=end    
+    end  
   end
 
   # beware! it is possible to change the path id for members of this sub_pathes!

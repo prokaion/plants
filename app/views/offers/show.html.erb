@@ -1,6 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Name:</strong>
+  <%= @offer.name %>
+</p>
+<p>
   <strong>Price cent:</strong>
   <%= @offer.price_cent %>
 </p>
@@ -8,6 +12,10 @@
 <p>
   <strong>Desc:</strong>
   <%= @offer.desc %>
+</p>
+<p>
+<strong>Url:</strong>
+  <%= @offer.url %>
 </p>
 
 <%= link_to 'Edit', edit_offer_path(@offer) %> |

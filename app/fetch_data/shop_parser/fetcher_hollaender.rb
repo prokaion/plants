@@ -36,7 +36,7 @@ class ShopParser::FetcherHollaender < ShopParser::DataFetcher
     doc = Nokogiri::HTML(open(url))
 
     offer_map[:offer_name] = doc.xpath('//h1').text  
-    desc = doc.xpath('//div[@class="paragraph"]/p').text
+    desc = doc.xpath('//div[@class="paragraph"]/p').first.text
     offer_map[:desc] = desc
 
 
